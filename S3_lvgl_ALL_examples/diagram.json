@@ -1,0 +1,213 @@
+{
+    "version": 1,
+    "author": "Sittinon",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-xiao-esp32-s3",
+            "id": "esp",
+            "top": 26.63,
+            "left": 119.82,
+            "rotate": 180,
+            "attrs": {}
+        },
+        {
+            "type": "board-ili9341-cap-touch",
+            "id": "lcd1",
+            "top": -147.72,
+            "left": -199.94,
+            "rotate": 270,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-lcd1602",
+            "id": "lcd2",
+            "top": 92.8,
+            "left": -263.2,
+            "attrs": {
+                "pins": "i2c"
+            }
+        },
+        {
+            "type": "wokwi-pushbutton",
+            "id": "btn1",
+            "top": 102.2,
+            "left": 57.6,
+            "attrs": {
+                "color": "gray",
+                "xray": "1",
+                "label": "PREV"
+            }
+        },
+        {
+            "type": "wokwi-pushbutton",
+            "id": "btn2",
+            "top": 169.4,
+            "left": 57.6,
+            "attrs": {
+                "color": "gray",
+                "label": "NEXT",
+                "xray": "1"
+            }
+        },
+        {
+            "type": "wokwi-pushbutton",
+            "id": "btn3",
+            "top": 140.6,
+            "left": 134.4,
+            "attrs": {
+                "color": "green",
+                "xray": "1",
+                "label": "GO"
+            }
+        }
+    ],
+    "connections": [
+        [
+            "esp:D5",
+            "lcd1:SCL",
+            "orange",
+            [
+                "h28.8",
+                "v-86.4"
+            ]
+        ],
+        [
+            "esp:D4",
+            "lcd1:SDA",
+            "gold",
+            [
+                "h19.2",
+                "v-192"
+            ]
+        ],
+        [
+            "lcd1:D/C",
+            "esp:D0",
+            "#aaa",
+            [
+                "h38.4",
+                "v-96",
+                "h163.2",
+                "v182.4"
+            ]
+        ],
+        [
+            "lcd1:CS",
+            "esp:D1",
+            "gray",
+            [
+                "h28.8",
+                "v-86.4",
+                "h163.2",
+                "v144"
+            ]
+        ],
+        [
+            "lcd1:MOSI",
+            "esp:D10",
+            "violet",
+            [
+                "h67.2",
+                "v67.2"
+            ]
+        ],
+        [
+            "lcd1:MISO",
+            "esp:D9",
+            "magenta",
+            [
+                "h86.4",
+                "v86.4"
+            ]
+        ],
+        [
+            "lcd1:SCK",
+            "esp:D8",
+            "purple",
+            [
+                "h76.8",
+                "v57.6"
+            ]
+        ],
+        [
+            "lcd1:SDA",
+            "lcd2:SDA",
+            "gold",
+            [
+                "h9.6",
+                "v-57.6",
+                "h-316.8",
+                "v249.6"
+            ]
+        ],
+        [
+            "lcd1:SCL",
+            "lcd2:SCL",
+            "orange",
+            [
+                "h19.2",
+                "v-57.6",
+                "h-240",
+                "v0",
+                "h-76.8",
+                "v249.6"
+            ]
+        ],
+        [
+            "esp:GND",
+            "btn1:1.l",
+            "black",
+            [
+                "h-77.42"
+            ]
+        ],
+        [
+            "esp:GND",
+            "btn2:1.l",
+            "black",
+            [
+                "h-77.42",
+                "v86.4"
+            ]
+        ],
+        [
+            "btn1:2.r",
+            "esp:D6",
+            "#8f4814",
+            [
+                "h115.4",
+                "v-95.8"
+            ]
+        ],
+        [
+            "btn2:2.r",
+            "esp:D3",
+            "#bf7844",
+            [
+                "h86.6",
+                "v-19"
+            ]
+        ],
+        [
+            "esp:D7",
+            "btn3:1.r",
+            "#df9864",
+            [
+                "v-19.2",
+                "h124.18",
+                "v153.6"
+            ]
+        ],
+        [
+            "esp:GND",
+            "btn3:2.l",
+            "black",
+            [
+                "h-77.42",
+                "v67.2"
+            ]
+        ]
+    ],
+    "dependencies": {}
+}
