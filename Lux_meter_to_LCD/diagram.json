@@ -1,0 +1,60 @@
+{
+    "version": 1,
+    "author": "maddy eric",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-xiao-esp32-c3",
+            "id": "esp",
+            "top": 19.02,
+            "left": -24.23,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-lcd1602",
+            "id": "lcd1",
+            "top": -118.4,
+            "left": 82.4,
+            "attrs": {
+                "pins": "i2c"
+            }
+        },
+        {
+            "type": "wokwi-photoresistor-sensor",
+            "id": "ldr1",
+            "top": -112,
+            "left": -220,
+            "attrs": {}
+        }
+    ],
+    "connections": [
+        [
+            "esp:D4",
+            "lcd1:SDA",
+            "green",
+            [
+                "h48",
+                "v-19.4"
+            ]
+        ],
+        [
+            "esp:D5",
+            "lcd1:SCL",
+            "magenta",
+            [
+                "h76.8",
+                "v38.1"
+            ]
+        ],
+        [
+            "ldr1:AO",
+            "esp:D2",
+            "green",
+            [
+                "h19.2",
+                "v162.5"
+            ]
+        ]
+    ],
+    "dependencies": {}
+}

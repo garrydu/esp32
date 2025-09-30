@@ -1,0 +1,286 @@
+{
+    "version": 1,
+    "author": "Uri Shaked",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-xiao-esp32-c3",
+            "id": "esp",
+            "top": 45.83,
+            "left": -187.38,
+            "rotate": 180,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-junction",
+            "id": "j1",
+            "top": 244.8,
+            "left": -158.4,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-lcd1602",
+            "id": "lcd1",
+            "top": 25.6,
+            "left": -32.8,
+            "attrs": {
+                "pins": "i2c"
+            }
+        },
+        {
+            "type": "wokwi-a4988",
+            "id": "drv1",
+            "top": 216,
+            "left": -177.6,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-stepper-motor",
+            "id": "stepper1",
+            "top": 165.73,
+            "left": -10.31,
+            "rotate": 90,
+            "attrs": {
+                "size": "17",
+                "display": "angle",
+                "arrow": "orange"
+            }
+        },
+        {
+            "type": "wokwi-gnd",
+            "id": "gnd2",
+            "top": 174.2,
+            "left": -86.6,
+            "rotate": 180,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-vcc",
+            "id": "vcc2",
+            "top": 287.04,
+            "left": -86.2,
+            "rotate": 180,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-slide-potentiometer",
+            "id": "pot1",
+            "top": -110.2,
+            "left": -49,
+            "attrs": {
+                "travelLength": "30"
+            }
+        },
+        {
+            "type": "wokwi-slide-switch",
+            "id": "sw1",
+            "top": -62.8,
+            "left": -236.9,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-vcc",
+            "id": "vcc1",
+            "top": -28.04,
+            "left": -182.4,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-gnd",
+            "id": "gnd1",
+            "top": -19.2,
+            "left": -307.8,
+            "attrs": {}
+        },
+        {
+            "type": "wokwi-text",
+            "id": "text1",
+            "top": -96,
+            "left": -268.8,
+            "attrs": {
+                "text": "On/Off Switch       Slide to adjust speed."
+            }
+        },
+        {
+            "type": "wokwi-text",
+            "id": "text2",
+            "top": -9.6,
+            "left": -67.2,
+            "attrs": {
+                "text": "In the simulator VCC and GND are connected by default."
+            }
+        }
+    ],
+    "connections": [
+        [
+            "esp:D4",
+            "lcd1:SDA",
+            "green",
+            [
+                "h48",
+                "v-19.4"
+            ]
+        ],
+        [
+            "esp:D5",
+            "lcd1:SCL",
+            "magenta",
+            [
+                "h76.8",
+                "v38.1"
+            ]
+        ],
+        [
+            "drv1:1B",
+            "stepper1:B-",
+            "green",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "drv1:1A",
+            "stepper1:B+",
+            "green",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "drv1:2A",
+            "stepper1:A+",
+            "green",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "drv1:2B",
+            "stepper1:A-",
+            "green",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "gnd2:GND",
+            "drv1:GND.2",
+            "black",
+            [
+                "v0"
+            ]
+        ],
+        [
+            "drv1:VDD",
+            "vcc2:VCC",
+            "red",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "drv1:RESET",
+            "drv1:SLEEP",
+            "green",
+            [
+                "h-38.4",
+                "v9.6"
+            ]
+        ],
+        [
+            "drv1:STEP",
+            "esp:D8",
+            "violet",
+            [
+                "h-48",
+                "v-211.2"
+            ]
+        ],
+        [
+            "drv1:DIR",
+            "esp:D7",
+            "magenta",
+            [
+                "h-57.6",
+                "v-230.4"
+            ]
+        ],
+        [
+            "drv1:MS3",
+            "esp:D9",
+            "orange",
+            [
+                "h-38.4",
+                "v-172.8"
+            ]
+        ],
+        [
+            "esp:D10",
+            "drv1:MS2",
+            "#8f4814",
+            [
+                "h-19.82",
+                "v153.6"
+            ]
+        ],
+        [
+            "drv1:MS1",
+            "esp:D0",
+            "gold",
+            [
+                "h-19.2",
+                "v-38.4",
+                "h86.4",
+                "v-76.8"
+            ]
+        ],
+        [
+            "pot1:SIG",
+            "esp:D1",
+            "cyan",
+            [
+                "h-57.6",
+                "v152.8"
+            ]
+        ],
+        [
+            "sw1:1",
+            "gnd1:GND",
+            "black",
+            [
+                "v0"
+            ]
+        ],
+        [
+            "sw1:3",
+            "vcc1:VCC",
+            "red",
+            [
+                "v48",
+                "h38.6"
+            ]
+        ],
+        [
+            "sw1:2",
+            "drv1:ENABLE",
+            "limegreen",
+            [
+                "v76.8",
+                "h-19.1",
+                "v163.2"
+            ]
+        ],
+        [
+            "esp:D2",
+            "drv1:ENABLE",
+            "limegreen",
+            [
+                "h28.8",
+                "v67.2",
+                "h-86.4",
+                "v9.6"
+            ]
+        ]
+    ],
+    "dependencies": {}
+}
