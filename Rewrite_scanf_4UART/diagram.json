@@ -1,0 +1,90 @@
+{
+    "version": 1,
+    "author": "Sittinon",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-xiao-esp32-c3",
+            "id": "esp",
+            "top": 113.03,
+            "left": -273.78,
+            "rotate": 180,
+            "attrs": {}
+        }
+    ],
+    "connections": [
+        [
+            "esp:D5",
+            "lcd1:SCL",
+            "orange",
+            [
+                "h76.8",
+                "v163.2",
+                "h134.4"
+            ]
+        ],
+        [
+            "esp:D4",
+            "lcd1:SDA",
+            "gold",
+            [
+                "h86.4",
+                "v163.2",
+                "h153.6"
+            ]
+        ],
+        [
+            "lcd1:D/C",
+            "esp:D0",
+            "green",
+            [
+                "v9.6",
+                "h-86.4",
+                "v-96",
+                "h-96",
+                "v-9.6"
+            ]
+        ],
+        [
+            "lcd1:CS",
+            "esp:D1",
+            "gray",
+            [
+                "v67.2",
+                "h-124.8",
+                "v-172.8"
+            ]
+        ],
+        [
+            "lcd1:MOSI",
+            "esp:D10",
+            "violet",
+            [
+                "v38.4",
+                "h-268.8",
+                "v-134.4"
+            ]
+        ],
+        [
+            "lcd1:MISO",
+            "esp:D9",
+            "magenta",
+            [
+                "v48",
+                "h-307.2",
+                "v-67.2"
+            ]
+        ],
+        [
+            "lcd1:SCK",
+            "esp:D8",
+            "purple",
+            [
+                "v57.6",
+                "h-297.6",
+                "v-201.6"
+            ]
+        ]
+    ],
+    "dependencies": {}
+}
