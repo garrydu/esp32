@@ -2,6 +2,8 @@
 
 ![screenshot](Screenshot.png)
 
-The code will show all examples on a capacitive touch display. Use the PREV and NEXT key to select which demo to play.
 
-The code can be compiled by Platformio and run with Wokwi simulator (vscode ver.). In case the simulator freezing, restart, browse to where it stopped with grey keys and hit green button to resume.
+This code displays all LVGL examples on a capacitive touch display. Use the PREV and NEXT keys to select which demo to play.
+
+
+The code can be compiled with PlatformIO and run in the Wokwi simulator (VS Code version). If the simulator freezes, restart it, navigate to where it stopped using the grey keys, and press the green button to resume.
