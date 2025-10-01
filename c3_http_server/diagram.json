@@ -1,90 +1,128 @@
 {
-    "version": 1,
-    "author": "Sittinon",
-    "editor": "wokwi",
-    "parts": [
-        {
-            "type": "board-xiao-esp32-c3",
-            "id": "esp",
-            "top": 113.03,
-            "left": -273.78,
-            "rotate": 180,
-            "attrs": {}
-        }
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-xiao-esp32-c3",
+      "id": "esp",
+      "top": -107.77,
+      "left": -235.38,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-lcd2004",
+      "id": "lcd1",
+      "top": -147.2,
+      "left": -109.6,
+      "attrs": {
+        "pins": "i2c"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 54.2,
+      "left": -105.6,
+      "attrs": {
+        "color": "green",
+        "xray": "1"
+      }
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 57.6,
+      "left": -0.6,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick1",
+      "top": 76.2,
+      "left": -263.4,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [
+      "esp:D5",
+      "lcd1:SCL",
+      "violet",
+      [
+        "h19.2",
+        "v9.6"
+      ]
     ],
-    "connections": [
-        [
-            "esp:D5",
-            "lcd1:SCL",
-            "orange",
-            [
-                "h76.8",
-                "v163.2",
-                "h134.4"
-            ]
-        ],
-        [
-            "esp:D4",
-            "lcd1:SDA",
-            "gold",
-            [
-                "h86.4",
-                "v163.2",
-                "h153.6"
-            ]
-        ],
-        [
-            "lcd1:D/C",
-            "esp:D0",
-            "green",
-            [
-                "v9.6",
-                "h-86.4",
-                "v-96",
-                "h-96",
-                "v-9.6"
-            ]
-        ],
-        [
-            "lcd1:CS",
-            "esp:D1",
-            "gray",
-            [
-                "v67.2",
-                "h-124.8",
-                "v-172.8"
-            ]
-        ],
-        [
-            "lcd1:MOSI",
-            "esp:D10",
-            "violet",
-            [
-                "v38.4",
-                "h-268.8",
-                "v-134.4"
-            ]
-        ],
-        [
-            "lcd1:MISO",
-            "esp:D9",
-            "magenta",
-            [
-                "v48",
-                "h-307.2",
-                "v-67.2"
-            ]
-        ],
-        [
-            "lcd1:SCK",
-            "esp:D8",
-            "purple",
-            [
-                "v57.6",
-                "h-297.6",
-                "v-201.6"
-            ]
-        ]
+    [
+      "lcd1:SDA",
+      "esp:D4",
+      "magenta",
+      [
+        "h-9.6",
+        "v0.2"
+      ]
     ],
-    "dependencies": {}
+    [
+      "btn1:1.l",
+      "esp:D2",
+      "green",
+      [
+        "h-19.2",
+        "v-124.8"
+      ]
+    ],
+    [
+      "gnd1:GND",
+      "btn1:2.r",
+      "black",
+      [
+        "v0",
+        "h-28.8",
+        "v28.8"
+      ]
+    ],
+    [
+      "joystick1:VERT",
+      "esp:D0",
+      "orange",
+      [
+        "v9.6",
+        "h67.2",
+        "v-240"
+      ]
+    ],
+    [
+      "joystick1:HORZ",
+      "esp:D1",
+      "gold",
+      [
+        "v19.2",
+        "h67.2",
+        "v-76.8"
+      ]
+    ],
+    [
+      "btn1:2.r",
+      "joystick1:GND",
+      "black",
+      [
+        "h0.2",
+        "v144.2",
+        "h-153.6"
+      ]
+    ],
+    [
+      "joystick1:SEL",
+      "esp:D3",
+      "#8f4814",
+      [
+        "v28.8",
+        "h67.2",
+        "v-316.8"
+      ]
+    ]
+  ],
+  "dependencies": {}
 }

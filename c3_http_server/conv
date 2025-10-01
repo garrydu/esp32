@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This script generates the index_src.h file from index.html and webpage_src.template
+# since the HTML file is easier to edit separately.
+# Run this script after editing index.html to update index_src.h
+# so that the changes will be included in the build.
+
+cd src
+sed '/1234567/q' webpage_src.template | grep -v 1234567 > test.h
+cat index.html >> test.h
+sed -n '1,/1234567/d;p' webpage_src.template >> test.h
+cd ..
+mv src/test.h src/index_src.h

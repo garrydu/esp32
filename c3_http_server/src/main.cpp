@@ -1,78 +1,109 @@
 #include <Arduino.h>
-#include <WiFi.h>
-#include <WebServer.h>
+#include <LiquidCrystal_I2C.h>
+#include "webpage.h"
+#include "connect_wifi.h"
 
-#define WIFI_SSID "Wokwi-GUEST"
-#define WIFI_PASSWORD ""
-// Defining the WiFi channel speeds up the connection:
-#define WIFI_CHANNEL 6
+// Set the LCD I2C address, columns and rows, and initialize the display
+#define I2C_ADDR 0x27
+#define LCD_COLUMNS 20
+#define LCD_LINES 4
+LiquidCrystal_I2C lcd = LiquidCrystal_I2C(I2C_ADDR, LCD_COLUMNS, LCD_LINES);
 
-WebServer server(80);
+// Define pins for button and joystick
+#define BUTTON_PIN D2
+#define JOYSTICK_X_PIN D1
+#define JOYSTICK_Y_PIN D0
+#define JOYSTICK_BUTTON_PIN D3
 
-void sendHtml()
-{
-  String response = R"(
-    <!DOCTYPE html><html>
-      <head>
-        <title>ESP32 Web Server Demo</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-          html { font-family: sans-serif; text-align: center; }
-          body { display: inline-flex; flex-direction: column; }
-          h1 { margin-bottom: 1.2em; } 
-          h2 { margin: 0; }
-          div { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; grid-auto-flow: column; grid-gap: 1em; }
-          .btn { background-color: #5B5; border: none; color: #fff; padding: 0.5em 1em;
-                 font-size: 2em; text-decoration: none }
-          .btn.OFF { background-color: #333; }
-        </style>
-      </head>
-            
-      <body>
-        <h1>ESP32 Web Server</h1>
+// Variables to hold the state of the button and joystick
+int buttonState;
+int joystickX;
+int joystickY;
+int joystickButtonState;
 
-        <div>
-          <h2>LED 1</h2>
-          <a href="/toggle/1" class="btn LED1_TEXT">LED1_TEXT</a>
-          <h2>LED 2</h2>
-          <a href="/toggle/2" class="btn LED2_TEXT">LED2_TEXT</a>
-        </div>
-      </body>
-    </html>
-  )";
-  // response.replace("LED1_TEXT", led1State ? "ON" : "OFF");
-  // response.replace("LED2_TEXT", led2State ? "ON" : "OFF");
-  server.send(200, "text/html", response);
-}
+int currentlyDisplayedValue = -1;
 
 void setup(void)
 {
   Serial.begin(115200);
-  // pinMode(LED1, OUTPUT);
-  // pinMode(LED2, OUTPUT);
 
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD, WIFI_CHANNEL);
-  Serial.print("Connecting to WiFi ");
-  Serial.print(WIFI_SSID);
-  // Wait for connection
-  while (WiFi.status() != WL_CONNECTED)
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(JOYSTICK_X_PIN, INPUT);
+  pinMode(JOYSTICK_Y_PIN, INPUT);
+  pinMode(JOYSTICK_BUTTON_PIN, INPUT_PULLUP);
+
+  lcd.init();
+  lcd.backlight();
+  lcd.print("LCD init done. ");
+  Serial.println("Pin and LCD Setup done.");
+
+  if (!connectToWiFi())
   {
-    delay(100);
-    Serial.print(".");
+    Serial.println("WiFi Failed!");
+    while (true)
+      ;
   }
-  Serial.println(" Connected!");
 
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  WebPage::init_html_pages();
+  lcd.setCursor(0, 2);
+  lcd.print("Server started.   ");
+  delay(1000);
+  lcd.clear();
+}
 
-  server.on("/", sendHtml);
+int status_value()
+{
+  int newButtonState = digitalRead(BUTTON_PIN);
+  int newJoystickX = analogRead(JOYSTICK_X_PIN);
+  int newJoystickY = analogRead(JOYSTICK_Y_PIN);
+  int newJoystickButtonState = digitalRead(JOYSTICK_BUTTON_PIN);
 
-  server.begin();
-  Serial.println("HTTP server started (http://localhost:8180)");
+  lcd.setCursor(0, 1);
+  lcd.printf("Btn:%s    ", newButtonState == HIGH ? "UP" : "DN");
+  lcd.setCursor(0, 2);
+  lcd.printf("X:%4d Y:%4d ", newJoystickX, newJoystickY);
+  lcd.setCursor(0, 3);
+  lcd.printf("JS Btn:%s ", newJoystickButtonState == HIGH ? "UP" : "DN");
+
+  int val = 0;
+  // only response to keys when released after being pressed
+  // this will avoid multiple key presses when holding down the button, or triggered by short delay time in loop()
+  if (buttonState == LOW and newButtonState == HIGH or joystickButtonState == LOW and newJoystickButtonState == HIGH)
+  {
+    val = 1;
+  }
+  if (joystickX < 2048 and newJoystickX == 2048)
+    val = val | 2;
+  if (joystickX > 2048 and newJoystickX == 2048)
+    val = val | 4;
+  if (joystickY < 2048 and newJoystickY == 2048)
+    val = val | 8;
+  if (joystickY > 2048 and newJoystickY == 2048)
+    val = val | 16;
+
+  buttonState = newButtonState;
+  joystickX = newJoystickX;
+  joystickY = newJoystickY;
+  joystickButtonState = newJoystickButtonState;
+
+  return val;
 }
 
 void loop(void)
 {
-  server.handleClient();
+  WebPage::server.handleClient();
+
+  int status_value_now = status_value();
+  if (status_value_now > 0)
+    WebPage::newKeyInput(status_value_now);
+
+  // Update LCD if a new web value has been submitted
+  if (WebPage::webSubmittedValue != -1 && WebPage::webSubmittedValue != currentlyDisplayedValue)
+  {
+    currentlyDisplayedValue = WebPage::webSubmittedValue;
+    lcd.setCursor(0, 0);
+    lcd.printf("Received: %d   ", currentlyDisplayedValue);
+    WebPage::webSubmittedValue = -1; // Reset after displaying
+  }
   delay(2);
 }

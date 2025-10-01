@@ -1,0 +1,150 @@
+#include "FS.h"
+#include <LittleFS.h>
+#include <ArduinoJson.h>
+
+/* You only need to format LittleFS the first time you run a
+   test or else use the LITTLEFS plugin to create a partition
+   https://github.com/lorol/arduino-esp32littlefs-plugin
+
+   If you test two partitions, you need to use a custom
+   partition.csv file, see in the sketch folder */
+#define FORMAT_LITTLEFS_IF_FAILED true
+
+void listDir(fs::FS &fs, const char * dirname, uint8_t levels) {
+  Serial.printf("Listing directory: %s\r\n", dirname);
+
+  File root = fs.open(dirname);
+  if (!root) {
+    Serial.println("- failed to open directory");
+    return;
+  }
+  if (!root.isDirectory()) {
+    Serial.println(" - not a directory");
+    return;
+  }
+
+  File file = root.openNextFile();
+  while (file) {
+    if (file.isDirectory()) {
+      Serial.print("  DIR : ");
+      Serial.println(file.name());
+      if (levels) {
+        listDir(fs, file.path(), levels - 1);
+      }
+    } else {
+      Serial.print("  FILE: ");
+      Serial.print(file.name());
+      Serial.print("\tSIZE: ");
+      Serial.println(file.size());
+    }
+    file = root.openNextFile();
+  }
+}
+
+void readFile(fs::FS &fs, const char * path) {
+  Serial.printf("\nReading file: %s\r\n", path);
+
+  File file = fs.open(path);
+  if (!file || file.isDirectory()) {
+    Serial.println("- failed to open file for reading");
+    return;
+  }
+
+  Serial.println("- read from file:");
+  while (file.available()) {
+    Serial.write(file.read());
+  }
+  file.close();
+}
+
+void writeFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("\nWriting file: %s\r\n", path);
+
+  File file = fs.open(path, FILE_WRITE);
+  if (!file) {
+    Serial.println("- failed to open file for writing");
+    return;
+  }
+  if (file.print(message)) {
+    Serial.println("- file written");
+  } else {
+    Serial.println("- write failed");
+  }
+  file.close();
+}
+
+void appendFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("\nAppending to file: %s\r\n", path);
+
+  File file = fs.open(path, FILE_APPEND);
+  if (!file) {
+    Serial.println("- failed to open file for appending");
+    return;
+  }
+  if (file.print(message)) {
+    Serial.println("- message appended");
+  } else {
+    Serial.println("- append failed");
+  }
+  file.close();
+}
+
+
+void serializeData() {
+
+  // allocate the memory for the document
+  StaticJsonDocument<256> data;
+
+  //sprintf(body,"[{\"id\":\"%s\",\"sb\":\"%s\",\"sc\":%d,\"oa\":%d,\"ob\":%d,\"oc\":%u,\"od\":%d,\"oe\":%d,\"of\":%d,\"og\":%d,\"oh\":%u,\"oi\":%u,\"oj\":%u,\"ok\":%u,\"ol\":%d,\"om\":%d,\"on\":%d,\"oo\":%d,\"op\":%d,\"oq\":%d,\"or\":%d,\"os\":%d,\"ot\":%d,\"ou\":%d,\"pa\":\"%s\",\"ax\":%d,\"ay\":%d,\"az\":%d,\"am\":%d,\"at\":%d,\"ga\":%0.6f,\"gb\":%0.6f,\"gc\":%d,\"gd\":%d,\"ge\":%d,\"gf\":%d,\"ha\":%d,\"hb\":%d,\"hc\":%d,\"hd\":%d,\"e1\":\"%s\",\"e2\":%d,\"e3\":%d,\"result\":\"%s\"}]",
+  // imei,sim_iccid_arr,int(gsmRssi),int(fuelStatus),int(engineload*100),int(coolantTemp),int(sf1*100),int(lf1*100),int(sf2*100),int(lf2*100),gasPressure,manifold_press,rpm,vehicle_speed,int(timing_adv),int(intakeTemp),maf,int(throttle*100),int(fuelT),int(hybridBattRem),int(odometer),int(hybrid_Bvolt),int(fuel_percentage*100),int(veh_bat*100),vin_arr,int(angleX*100),int(angleY*100),int(angleZ*100),int(mag*100),int(tempT*100),GPSlatitude,GPSlongitude,int(GPSspeed*10),int(GPSaltitude*10),int(accuracy*10),int(usat),int(carTrip),int(device_plug),int(device_volt*100),int(vMCheck1),cantype,int(ver),int(otaError),rxResult);
+
+  // add some values
+  data["id"] = "123456789";
+  data["sb"] = "test string";
+  data["sc"] = 123456789;
+  data["oa"] = 111111111;
+  data["ob"] = 222222222;
+  // .......
+
+  StaticJsonDocument<256> doc;
+  // create an empty array
+  JsonArray array = doc.to<JsonArray>();
+  // Add data
+  array.add(data);
+
+  File file = LittleFS.open("/myData.json", FILE_WRITE);
+  if (!file) {
+    Serial.println("- failed to open file for writing");
+    return;
+  }
+
+  // serialize the array and send the result to Serial
+  serializeJsonPretty(doc, Serial);
+  // serialize the array and save to file
+  serializeJson(doc, file);
+  file.close();
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  if (!LittleFS.begin(FORMAT_LITTLEFS_IF_FAILED)) {
+    Serial.println("LittleFS Mount Failed");
+    return;
+  }
+
+  // listDir(LittleFS, "/", 0);
+  // writeFile(LittleFS, "/hello2.txt", "Hello2");
+  // listDir(LittleFS, "/", 0);
+  // writeFile(LittleFS, "/hello.txt", "Hello ");
+  // appendFile(LittleFS, "/hello.txt", "World!\r\n");
+  // readFile(LittleFS, "/hello.txt");
+  // listDir(LittleFS, "/", 0);
+
+  serializeData();
+  readFile(LittleFS, "/myData.json");
+}
+
+void loop() {
+
+}
