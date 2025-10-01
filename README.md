@@ -1,6 +1,6 @@
 # esp32 projects
 
-![screenshot](c3_http_server/Screenshot.png)
+<img src="c3_http_server/Screenshot.png" alt="screenshot" width="50%" />
 
 Including separate projects in each subfolder. 
 Check each folder for details.
