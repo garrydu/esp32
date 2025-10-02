@@ -1,0 +1,116 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LVGL all examples</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: #1e1e1e;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      width: 340px;
+    }
+
+    .form-header {
+      margin-bottom: 20px;
+      font-size: 16px;
+      text-align: center;
+      color: #bbbbbb;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+      font-size: 14px;
+    }
+
+    .form-select:focus {
+      border-color: #6200ea;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #6200ea;
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px #3b0cad;
+      transition: all 0.1s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #7a34f4;
+    }
+
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px #3b0cad;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <!-- Top label -->
+    <div class="form-header" id="header">Please select one example and submit it to ESP32 to display.</div>
+
+    <!-- 15 options selection -->
+    <div class="form-group">
+      <select class="form-select" id="selection" size="15">
+        <option>Placeholder Option 1</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="button" id="submitBtn" onclick="submitForm()">Submit Selection</button>
+  </div>
+</body>
+
+<script type="text/javascript">
+  // The communication is just one way from the web page to the ESP32. 
+  // No need to update the web page from ESP32.
+  function submitForm() {
+    var xhttp = new XMLHttpRequest();
+
+    const selectElement = document.getElementById('selection');
+    const selectedValue = selectElement.value; // gets value attribute or text if no value set
+    const selectedIndex = selectElement.selectedIndex;
+    const selectedOptionText = selectElement.options[selectedIndex].text;
+
+    console.log('Selected value:', selectedValue);
+    console.log('Selected option text:', selectedOptionText);
+
+    xhttp.open("PUT", "submit?VALUE=" + String(selectedIndex), true);
+    console.log("Submitting: " + selectedValue + " Index: " + selectedIndex);
+    xhttp.send();
+  }
+</script>
+</html>
+

@@ -1,0 +1,11 @@
+
+#pragma once
+
+// note R"KEYWORD( html page code )KEYWORD"; 
+// again I hate strings, so char is it and this method let's us write naturally
+
+const char PAGE_MAIN[] PROGMEM = R"=====(
+
+1234567
+
+)=====";
