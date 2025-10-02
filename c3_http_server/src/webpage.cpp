@@ -14,7 +14,6 @@ namespace WebPage
     constexpr size_t XmlBufferSize = 2048;
     char XML[XmlBufferSize];
     int webSubmittedValue = -1;
-    // bool XMLSent = true;
     std::queue<int> key_buffer;
 
     WebServer server(80);
@@ -61,10 +60,8 @@ namespace WebPage
             update_XML(key_buffer.front());
             key_buffer.pop();
         }
-        XMLSent = false;
         Serial.println("Sending updated XML");
         server.send(200, "text/xml", XML); // a longer timeout that 200 ms
-        XMLSent = true;
     }
 
     void getSubmit()
