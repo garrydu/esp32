@@ -1,7 +1,6 @@
 // #include "examples/lv_examples.h"
-#include "../lib/lvgl-8.3.11/examples/lv_examples.h"
+// #include "../lib/lvgl-8.3.11/examples/lv_examples.h"
 
-// void (*func_list[])() = {
 #include <vector>
 
 std::vector<void (*)()> func_list = {

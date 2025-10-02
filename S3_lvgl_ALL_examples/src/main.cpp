@@ -3,11 +3,8 @@
 #include <TFT_eSPI.h>
 #include <Adafruit_FT6206.h>
 #include <LiquidCrystal_I2C.h>
-// #include "freertos/FreeRTOS.h"
-// #include "freertos/task.h"
-// #include "freertos/semphr.h"
 #include "example_funcs.h"
-#include "../lib/lvgl-8.3.11/examples/lv_examples.h"
+// #include "../lib/lvgl-8.3.11/examples/lv_examples.h"
 
 // The parameters for handling example functions
 const int func_list_size = func_list.size();
