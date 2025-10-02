@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-xiao-esp32-s3",
+      "id": "esp",
+      "top": 99.78,
+      "left": -68.97,
+      "rotate": 90,
+      "attrs": {}
+    },
+    { "type": "wokwi-dip-switch-8", "id": "sw1", "top": 25.5, "left": -84.9, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 57.6, "left": -0.6, "attrs": {} }
+  ],
+  "connections": [
+    [ "r2:2", "j1:J", "black", [ "v0", "h27.6" ] ],
+    [ "esp:GND", "j1:J", "black", [ "h19.82", "v86.4" ] ],
+    [ "j1:J", "r3:2", "black", [ "v0" ] ],
+    [ "sw1:8a", "esp:D0", "green", [ "v0" ] ],
+    [ "sw1:7a", "esp:D1", "green", [ "v0" ] ],
+    [ "sw1:6a", "esp:D2", "green", [ "v0" ] ],
+    [ "sw1:5a", "esp:D3", "green", [ "v0" ] ],
+    [ "sw1:4a", "esp:D4", "green", [ "v0" ] ],
+    [ "sw1:3a", "esp:D5", "green", [ "v0" ] ],
+    [ "sw1:2a", "esp:D6", "green", [ "v0" ] ],
+    [ "sw1:1a", "esp:D7", "green", [ "v19.2", "h-9.6", "v96", "h19.2" ] ],
+    [ "sw1:1b", "sw1:2b", "black", [ "v0" ] ],
+    [ "sw1:2b", "sw1:3b", "black", [ "v0" ] ],
+    [ "sw1:3b", "sw1:4b", "black", [ "v0" ] ],
+    [ "sw1:4b", "sw1:5b", "black", [ "v0" ] ],
+    [ "sw1:5b", "sw1:6b", "black", [ "v0" ] ],
+    [ "sw1:6b", "sw1:7b", "black", [ "v0" ] ],
+    [ "sw1:7b", "sw1:8b", "black", [ "v0" ] ],
+    [ "gnd1:GND", "sw1:8b", "black", [ "v-28.8" ] ]
+  ],
+  "dependencies": {}
+}
