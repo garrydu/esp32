@@ -9,3 +9,6 @@ Check each folder for details.
 * [C3_Motor_speed_adjust_FreeRTOS](C3_Motor_speed_adjust_FreeRTOS): Using FreeRTOS adjust step motor speed
 * [Lux_meter_to_LCD](Lux_meter_to_LCD): LUX meter reader and conversion
 * [S3_lvgl_ALL_examples](S3_lvgl_ALL_examples): LVGL all examples demonstration
+* [Send_plot_to_webpage_and_API](Send_plot_to_webpage_and_API): Send plot data to a webpage and API
+* [Rewrite_scanf_4UART](Rewrite_scanf_4UART): scanf functionality for UART
+* [c3_http_server](c3_http_server): Http server two way communication with ESP32

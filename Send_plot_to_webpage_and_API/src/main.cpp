@@ -14,7 +14,7 @@ void data2XML()
     for (int i = 0; i < num_pins; i++)
         button_states[i] = digitalRead(pins[num_pins - 1 - i]) == LOW;
     WebPage::update_XML(button_states, num_pins);
-    WebPage::webSubmittedValue = -1;
+    // WebPage::webSubmittedValue = -1;
     // }
 }
 

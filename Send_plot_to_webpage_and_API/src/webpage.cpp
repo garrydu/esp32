@@ -13,10 +13,14 @@ namespace WebPage
 {
     constexpr size_t XmlBufferSize = 2048;
     char XML[XmlBufferSize];
-    int webSubmittedValue = -1;
+    // int webSubmittedValue = -1;
     bool XMLSent = true;
     void (*xml_update)() = nullptr;
-    // std::queue<int> key_buffer;
+    /*
+    Using this method to define a function pointer for the "callback" function. Using this method,
+    the Webpage functions can update the XML by MCU hardware readings on demand and being more real
+    time processing.
+    */
 
     WebServer server(80);
 
@@ -94,7 +98,7 @@ namespace WebPage
             String value = server.arg("VALUE");
             Serial.print("Received VALUE: ");
             Serial.println(value);
-            webSubmittedValue = value.toInt();
+            //webSubmittedValue = value.toInt();
             xml_update(); // call the function to update the XML
             // Here you can add code to handle the received value
         }
