@@ -12,3 +12,4 @@ Check each folder for details.
 * [Send_plot_to_webpage_and_API](Send_plot_to_webpage_and_API): Send plot data to a webpage and API
 * [Rewrite_scanf_4UART](Rewrite_scanf_4UART): scanf functionality for UART
 * [c3_http_server](c3_http_server): Http server two way communication with ESP32
+
